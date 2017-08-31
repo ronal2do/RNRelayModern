@@ -40,7 +40,7 @@ export default class App extends Component {
               console.log('====================================');
               console.log('props', props);
               console.log('====================================');
-              return <Text>{ idx(props, _ => _.users.edges[0].node.name) }is great!</Text>;
+              return <Text>{ idx(props, _ => _.users.edges[0].node.name) } is great!</Text>;
             }
             return <Text>Loading...</Text>;
           }} 
