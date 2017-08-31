@@ -10,7 +10,8 @@ import {
     Text, 
     View 
 } from "react-native";
-const { QueryRenderer, graphql } = require("react-relay");
+import { QueryRenderer, graphql } from "react-relay";
+import environment from "../createRelayEnvironment";
 
 export default class App extends Component {
   render() {
