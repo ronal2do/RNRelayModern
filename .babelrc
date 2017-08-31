@@ -1,13 +1,13 @@
 {
-  "plugins": [
-    [
-      "relay",
-      {
-        "schema": "data/schema.graphql"
-      }
-    ]
-  ],
   "presets": [
     "react-native"
+  ],
+  "plugins": [
+    "relay",
+    [
+      "babel-plugin-idx", {
+        "importName": "./idx"
+      }
+    ]
   ]
 }

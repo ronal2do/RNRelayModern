@@ -4,14 +4,27 @@
  * @flow
  */
 
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import { 
     StyleSheet, 
     Text, 
     View 
-} from "react-native";
-import { QueryRenderer, graphql } from "react-relay";
-import environment from "../createRelayEnvironment";
+} from 'react-native';
+import idx from 'idx';
+import { QueryRenderer, graphql } from 'react-relay';
+import environment from '../createRelayEnvironment';
+
+const query = graphql`
+  query AppQuery {
+    users {
+      edges {
+        node {
+          name
+        }
+      }
+    }
+  }
+`;
 
 export default class App extends Component {
   render() {
@@ -19,26 +32,19 @@ export default class App extends Component {
       <View style={styles.container}>
         <QueryRenderer 
           environment={environment} 
-          query={graphql`
-            query AppQuery {
-              users {
-                edges {
-                  node {
-                    name
-                  }
-                }
-              }
-            }
-          `} 
+          query={query} 
           render={({ error, props }) => {
             if (error) {
-              return <div>{error.message}</div>;
+              return <Text>{error.message}</Text>;
             } else if (props) {
-              return <div>{props.users.edges[0].node.name} is great!</div>;
+              console.log('====================================');
+              console.log('props', props);
+              console.log('====================================');
+              return <Text>{ idx(props, _ => _.users.edges[0].node.name) }is great!</Text>;
             }
-            return <div>Loading</div>;
+            return <Text>Loading...</Text>;
           }} 
-        />
+        /> 
       </View>
     );
   }
@@ -47,18 +53,8 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF"
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF'
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: "center",
-    margin: 10
-  },
-  instructions: {
-    textAlign: "center",
-    color: "#333333",
-    marginBottom: 5
-  }
 });
